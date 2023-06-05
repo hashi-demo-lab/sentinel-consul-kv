@@ -36,11 +36,12 @@ retrieve_kv_data = func(address, token, variableAppId) {
 # Validate sources of modules in the registry
 validate_rule = func(address, token, variableAppId) {
 
-  validated = false
+  
 
   # Get latest module versions from registry
   get_kv = retrieve_kv_data(address, token, variableAppId)
-
+  
+  validated = false
   return validated
 }
 
