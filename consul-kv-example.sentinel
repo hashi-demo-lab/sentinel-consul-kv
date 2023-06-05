@@ -1,0 +1,53 @@
+# This policy uses the HTTP import to call the Consul API 
+
+##### Imports #####
+import "http"
+import "strings"
+import "json"
+import "types"
+import "tfplan/v2" as tfplan
+
+##### Parameters #####
+
+# The address for Consul API
+param address default "consul-cluster.consul.8f401e26-b086-451f-b61a-4ffb6dd26304.aws.hashicorp.cloud"
+
+# A valid Terraform Cloud or Terraform Enterprise API token
+param token
+
+variableAppId = filter tfplan.variables as _, v {
+    v.name is "app_id"
+}
+
+##### Functions #####
+
+# Retrieve modules from a module registry and give their paths and versions
+retrieve_kv_data = func(address, token, variableAppId) {
+  req = http.request("https://" + address + "/api/registry/v1/modules/"  +
+                       organization)
+  req = req.with_header("Authorization", "Bearer " + token)
+  res = json.unmarshal(http.get(req).body)
+
+  # kv response
+  return res
+}
+
+# Validate sources of modules in the registry
+validate_rule = func(address, token, variableAppId) {
+
+  validated = true
+
+  # Get latest module versions from registry
+  #get_kv = retrieve_kv_data( address, token, prefix)
+
+  return validated
+}
+
+##### Rules #####
+
+# Main rule
+policy_validated = validate_rule(address, token, variableAppId)
+
+main = rule {
+  policy_validated
+}
