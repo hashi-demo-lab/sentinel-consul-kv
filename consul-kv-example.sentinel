@@ -17,6 +17,7 @@ param token
 
 variableAppId = filter tfplan.variables as _, v {
     v.name is "app_id"
+    print(v.name)
 }
 
 ##### Functions #####
