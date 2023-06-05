@@ -26,7 +26,6 @@ variableAppId = filter tfplan.variables as _, v {
 # Retrieve modules from a module registry and give their paths and versions
 retrieve_kv_data = func(address, token, variableAppId) {
   print("variableAppId: ", variableAppId)
-  print("token: ", token)
   print("address: ", address)
   req = http.request("https://" + address + "/v1/kv/policy?recurse=true")
   req = req.with_header("Authorization", "Bearer " + token)
