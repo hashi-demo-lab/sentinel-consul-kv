@@ -31,7 +31,7 @@ retrieve_kv_data = func(address, token, variableAppId) {
   req = http.request("https://" + address + "/v1/kv/policy?recurse=true")
   req = req.with_header("Authorization", "Bearer " + token)
   res = json.unmarshal(http.get(req).body)
-
+  print("response: ", response)
   # kv response
   return res
 }
