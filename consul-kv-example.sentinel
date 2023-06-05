@@ -12,6 +12,8 @@ import "tfplan/v2" as tfplan
 # The address for Consul API
 param address default "consul-cluster.consul.8f401e26-b086-451f-b61a-4ffb6dd26304.aws.hashicorp.cloud"
 
+#https://consul-cluster.consul.8f401e26-b086-451f-b61a-4ffb6dd26304.aws.hashicorp.cloud/kv/policy?recurse=true"
+
 # A valid Consul token with read on KV path
 param token
 
@@ -25,7 +27,8 @@ variableAppId = filter tfplan.variables as _, v {
 retrieve_kv_data = func(address, token, variableAppId) {
   print("variableAppId: ", variableAppId)
   print("token: ", token)
-  req = http.request("https://" + address + "/kv/policy?recurse=true")
+  print("address: ", address)
+  req = http.request("https://" + address + "/v1/kv/policy?recurse=true")
   req = req.with_header("Authorization", "Bearer " + token)
   res = json.unmarshal(http.get(req).body)
 
@@ -40,7 +43,7 @@ validate_rule = func(address, token, variableAppId) {
 
   # Get latest module versions from registry
   get_kv = retrieve_kv_data(address, token, variableAppId)
-  
+
   validated = false
   return validated
 }
