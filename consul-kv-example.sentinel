@@ -18,7 +18,11 @@ param address default "consul-cluster.consul.8f401e26-b086-451f-b61a-4ffb6dd2630
 param token
 
 workspaceid = tfrun.workspace.id
+workspace_name = tfrun.workspace.name
+
 print(tfplan.variables)
+print(workspaceid)
+print(workspace_name)
 
 ##### Functions #####
 # Retrieve kv path
@@ -31,11 +35,9 @@ retrieve_kv_data = func(address, token) {
 
 #decode base64 values
   kv_policy = {}
-
   for res as kv {
     kv_policy[kv.Key] = base64.decode(kv.Value)
   }
-
   print("kv_policy: ", kv_policy)
 
   # kv response
@@ -44,12 +46,14 @@ retrieve_kv_data = func(address, token) {
 }
 
 
-# Validate sources of modules in the registry
+# Validate rule
 validate_rule = func(address, token) {
-  # Get latest module versions from registry
+
+  # Get KV policy data
   get_kv = retrieve_kv_data(address, token)
   validated = false
   return validated
+  
 }
 
 ##### Rules #####
