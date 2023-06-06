@@ -6,45 +6,47 @@ import "strings"
 import "json"
 import "types"
 import "tfplan/v2" as tfplan
+import "tfrun"
+import "base64"
 
 ##### Parameters #####
 
 # The address for Consul API
 param address default "consul-cluster.consul.8f401e26-b086-451f-b61a-4ffb6dd26304.aws.hashicorp.cloud"
 
-#https://consul-cluster.consul.8f401e26-b086-451f-b61a-4ffb6dd26304.aws.hashicorp.cloud/kv/policy?recurse=true"
-
 # A valid Consul token with read on KV path
 param token
 
+workspaceid = tfrun.workspace.id
 print(tfplan.variables)
 
-variableAppId = filter tfplan.variables as _, v {
-    v.name is "app_id"
-}
-
 ##### Functions #####
-
-# Retrieve modules from a module registry and give their paths and versions
-retrieve_kv_data = func(address, token, variableAppId) {
-  print("variableAppId: ", variableAppId)
+# Retrieve kv path
+retrieve_kv_data = func(address, token) {
   print("address: ", address)
   req = http.request("https://" + address + "/v1/kv/policy?recurse=true")
   req = req.with_header("Authorization", "Bearer " + token)
   res = json.unmarshal(http.get(req).body)
   print("response: ", res)
+
+#decode base64 values
+  kv_policy = {}
+
+  for item in res {
+    kv_policy[item.key] = base64.decode(item.value)
+  }
+
+  print("kv_policy: ", kv_policy)
+
   # kv response
-  return res
+  return kv_json
 }
 
+
 # Validate sources of modules in the registry
-validate_rule = func(address, token, variableAppId) {
-
-  
-
+validate_rule = func(address, token) {
   # Get latest module versions from registry
-  get_kv = retrieve_kv_data(address, token, variableAppId)
-
+  get_kv = retrieve_kv_data(address, token)
   validated = false
   return validated
 }
@@ -52,7 +54,7 @@ validate_rule = func(address, token, variableAppId) {
 ##### Rules #####
 
 # Main rule
-policy_validated = validate_rule(address, token, variableAppId)
+policy_validated = validate_rule(address, token)
 
 main = rule {
   policy_validated
