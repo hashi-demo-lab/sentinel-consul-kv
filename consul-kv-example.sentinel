@@ -39,7 +39,7 @@ retrieve_kv_data = func(address, token) {
   print("kv_policy: ", kv_policy)
 
   # kv response
-  return kv_json
+  return kv_policy
 }
 
 
