@@ -35,18 +35,26 @@ validate_rule = func(address, token, path) {
   return validated
 }
 
-validate_policy_exclusion = func(address, token, path) {
-  print("Policy rule is in excluded list")
+policy_exclusion = func(path) {
+  print("Policy rule is in excluded list: ", path)
   return true # policy exclusion
 }
 
-rule1 = true
+#THIS IS NOT COMPLETE, NEED TO SEPARATE FUNCTION for Key lookup to set boolean
+
+# rule key = #SOME KEY
+rule_key = "SOME KEY" #SOME KEY
+#Get key from KV json
+#set boolean
+enablePolicy = true
 
 
 ##### Rules #####
 # Main rule conditional based on policy
-policy_validated = rule when rule1 {validate_rule(address, token, path)}
-exclude_eval = rule when rule1 is false {validate_policy_exclusion(address, token, path)}
+policy_validated = rule when enablePolicy {validate_rule(address, token, path)}
+
+#Policy Exclusion
+exclude_eval = rule when enablePolicy is false {policy_exclusion(path)}
 
 
 main = rule {
