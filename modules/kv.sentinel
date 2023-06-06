@@ -16,7 +16,6 @@ retrieve_kv_data = func(address, token, path) {
   for res as kv {
     kv_policy[kv.Key] = base64.decode(kv.Value)
   }
-  print("kv_policy: ", kv_policy)
 
   # kv response
   return kv_policy
