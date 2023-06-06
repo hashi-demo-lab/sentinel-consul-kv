@@ -9,7 +9,7 @@ import "tfplan/v2" as tfplan
 import "tfrun"
 import "base64"
 
-#module
+#import kv module ./module/kv.sentinel
 import "kv"
 
 ##### Parameters #####
@@ -27,34 +27,10 @@ print(tfplan.variables)
 print(workspaceid)
 print(workspace_name)
 
-##### Functions #####
-# Retrieve kv path
-
-
-retrieve_kv_data = func(address, token) {
-  print("address: ", address)
-  req = http.request("https://" + address + "/v1/kv/policy?recurse=true")
-  req = req.with_header("Authorization", "Bearer " + token)
-  res = json.unmarshal(http.get(req).body)
-  print("response: ", res)
-
-#decode base64 values
-  kv_policy = {}
-  for res as kv {
-    kv_policy[kv.Key] = base64.decode(kv.Value)
-  }
-  print("kv_policy: ", kv_policy)
-
-  # kv response
-  return kv_policy
-
-}
-
-
 # Validate rule
 validate_rule = func(address, token) {
 
-  # Get KV policy data using module
+  # Get KV policy data using module ./module/kv.sentinel
   get_kv = kv.retrieve_kv_data(address, token)
   print("kv_policy from module: ", get_kv)
   
