@@ -1,0 +1,23 @@
+import "http"
+import "strings"
+import "json"
+import "types"
+import "base64"
+
+retrieve_kv_data = func(address, token) {
+  print("address: ", address)
+  req = http.request("https://" + address + "/v1/kv/policy?recurse=true")
+  req = req.with_header("Authorization", "Bearer " + token)
+  res = json.unmarshal(http.get(req).body)
+  print("response: ", res)
+
+#decode base64 values
+  kv_policy = {}
+  for res as kv {
+    kv_policy[kv.Key] = base64.decode(kv.Value)
+  }
+  print("kv_policy: ", kv_policy)
+
+  # kv response
+  return kv_policy
+}
