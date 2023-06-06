@@ -40,7 +40,7 @@ validate_policy_exclusion = func(address, token, path) {
   return true # policy exclusion
 }
 
-rule1 = false
+rule1 = true
 
 
 ##### Rules #####
