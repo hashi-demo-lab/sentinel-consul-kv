@@ -40,13 +40,13 @@ validate_policy_exclusion = func(address, token, path) {
   return true # to check policy exclusion
 }
 
-rule1 = true
+rule1 = false
 
 
 ##### Rules #####
 # Main rule conditional based on policy
 policy_validated = rule when rule1 {validate_rule(address, token, path)}
-exclude_eval = rule when {validate_policy_exclusion(address, token, path)}
+exclude_eval = rule when rule1 is false {validate_policy_exclusion(address, token, path)}
 
 
 main = rule {
