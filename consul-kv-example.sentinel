@@ -31,13 +31,13 @@ validate_rule = func(address, token, path) {
   # Get KV policy data using module ./module/kv.sentinel
   get_kv = kv.retrieve_kv_data(address, token, path)
   print("kv_policy from module: ", get_kv)
-  validated = true # to check policy
+  validated = false # to check policy
   return validated
 }
 
 validate_policy_exclusion = func(address, token, path) {
   print("Policy rule is in excluded list")
-  return true # to check policy exclusion
+  return true # policy exclusion
 }
 
 rule1 = false
