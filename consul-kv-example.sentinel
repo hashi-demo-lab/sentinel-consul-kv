@@ -39,7 +39,7 @@ validate_rule = func(address, token, path) {
 
 ##### Rules #####
 # Main rule
-policy_validated = rule validate_rule(address, token, path)
+policy_validated = rule {validate_rule(address, token, path)}
 
 #exclude_eval = rule when excluded in exclusions {
 #  print("rule is excluded list")
