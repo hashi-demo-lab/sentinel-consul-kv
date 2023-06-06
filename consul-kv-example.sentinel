@@ -33,7 +33,6 @@ validate_rule = func(address, token) {
   # Get KV policy data using module ./module/kv.sentinel
   get_kv = kv.retrieve_kv_data(address, token)
   print("kv_policy from module: ", get_kv)
-  
   validated = false
   return validated
   
