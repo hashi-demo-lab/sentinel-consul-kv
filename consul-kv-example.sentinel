@@ -45,7 +45,7 @@ validate_policy_exclusion = func(address, token, path) {
 # Main rule
 policy_validated = rule {validate_rule(address, token, path)}
 
-exclude_eval = rule  { 
+exclude_eval = rule { 
   validate_policy_exclusion(address, token, path)
   print("Policy rule is in excluded list")
 }
