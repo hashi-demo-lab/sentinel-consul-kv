@@ -9,6 +9,9 @@ import "tfplan/v2" as tfplan
 import "tfrun"
 import "base64"
 
+#module
+import "kv"
+
 ##### Parameters #####
 
 # The address for Consul API
@@ -26,6 +29,8 @@ print(workspace_name)
 
 ##### Functions #####
 # Retrieve kv path
+
+
 retrieve_kv_data = func(address, token) {
   print("address: ", address)
   req = http.request("https://" + address + "/v1/kv/policy?recurse=true")
@@ -49,8 +54,10 @@ retrieve_kv_data = func(address, token) {
 # Validate rule
 validate_rule = func(address, token) {
 
-  # Get KV policy data
-  get_kv = retrieve_kv_data(address, token)
+  # Get KV policy data using module
+  get_kv = kv.retrieve_kv_data(address, token)
+  print("kv_policy from module: ", get_kv)
+  
   validated = false
   return validated
   
