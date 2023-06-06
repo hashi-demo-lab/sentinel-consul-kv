@@ -1,0 +1,4 @@
+path_prefix: policy/mygroup2/myapp1/dev/
+subkeys:
+  environment: dev
+  TestKey2: TestValue2

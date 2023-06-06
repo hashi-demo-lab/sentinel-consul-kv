@@ -4,9 +4,9 @@ import "json"
 import "types"
 import "base64"
 
-retrieve_kv_data = func(address, token) {
+retrieve_kv_data = func(address, token, path) {
   print("address: ", address)
-  req = http.request("https://" + address + "/v1/kv/policy?recurse=true")
+  req = http.request("https://" + address + "/v1/kv/" + path)
   req = req.with_header("Authorization", "Bearer " + token)
   res = json.unmarshal(http.get(req).body)
   print("response: ", res)

@@ -8,30 +8,29 @@ import "types"
 import "tfplan/v2" as tfplan
 import "tfrun"
 import "base64"
-
 #import kv module ./module/kv.sentinel
 import "kv"
 
 ##### Parameters #####
-
 # The address for Consul API
 param address default "consul-cluster.consul.8f401e26-b086-451f-b61a-4ffb6dd26304.aws.hashicorp.cloud"
 
 # A valid Consul token with read on KV path
 param token
 
+path = "policy/mygroup1/myapp1/uat/"
 workspaceid = tfrun.workspace.id
 workspace_name = tfrun.workspace.name
 
-print(tfplan.variables)
-print(workspaceid)
-print(workspace_name)
+print("vars: ", tfplan.variables)
+print("workspaceid: ", workspaceid)
+print("workspace_name", workspace_name)
 
 # Validate rule
-validate_rule = func(address, token) {
+validate_rule = func(address, token, path) {
 
   # Get KV policy data using module ./module/kv.sentinel
-  get_kv = kv.retrieve_kv_data(address, token)
+  get_kv = kv.retrieve_kv_data(address, token, path)
   print("kv_policy from module: ", get_kv)
   validated = false
   return validated
@@ -39,9 +38,8 @@ validate_rule = func(address, token) {
 }
 
 ##### Rules #####
-
 # Main rule
-policy_validated = validate_rule(address, token)
+policy_validated = validate_rule(address, token, path)
 
 main = rule {
   policy_validated

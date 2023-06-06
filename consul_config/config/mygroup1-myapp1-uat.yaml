@@ -1,0 +1,8 @@
+path_prefix: policy/mygroup1/myapp1/uat/
+subkeys:
+  environment: uat
+  enable_rule1: true
+  enable_rule2: true
+  enable_rule3: false
+  enable_rule4: true
+  enable_rule5: true
