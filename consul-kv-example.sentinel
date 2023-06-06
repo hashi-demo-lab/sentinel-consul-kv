@@ -31,7 +31,7 @@ validate_rule = func(address, token, path) {
   # Get KV policy data using module ./module/kv.sentinel
   get_kv = kv.retrieve_kv_data(address, token, path)
   print("kv_policy from module: ", get_kv)
-  validated = true # to check policy
+  validated = false # to check policy
   return validated
 }
 
@@ -45,7 +45,6 @@ validate_policy_exclusion = func(address, token, path) {
 ##### Rules #####
 # Main rule
 policy_validated = rule {validate_rule(address, token, path)}
-
 exclude_eval = rule {validate_policy_exclusion(address, token, path)}
 
 
