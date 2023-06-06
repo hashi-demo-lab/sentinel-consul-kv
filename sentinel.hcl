@@ -4,5 +4,5 @@ policy "consul-kv-example" {
 }
 
 import "module" "kv" {
-  source = "modules/kv.sentinel"
+  source = "./modules/kv.sentinel"
 }
