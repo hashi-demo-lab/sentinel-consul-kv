@@ -30,16 +30,17 @@ retrieve_kv_data = func(address, token) {
   print("response: ", res)
 
 #decode base64 values
-  kv_policy = {}
+#  kv_policy = {}
 
-  for item in res {
-    kv_policy[item.key] = base64.decode(item.value)
-  }
+#  for item in res {
+#    kv_policy[item.key] = base64.decode(item.value)
+#  }
 
-  print("kv_policy: ", kv_policy)
+ # print("kv_policy: ", kv_policy)
 
   # kv response
-  return kv_policy
+#  return kv_policy
+
 }
 
 
