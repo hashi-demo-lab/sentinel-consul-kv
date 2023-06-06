@@ -6,7 +6,7 @@ import "base64"
 
 retrieve_kv_data = func(address, token, path) {
   print("address: ", address)
-  req = http.request("https://" + address + "/v1/kv/" + path)
+  req = http.request("https://" + address + "/v1/kv/" + path + "?recurse=true")
   req = req.with_header("Authorization", "Bearer " + token)
   res = json.unmarshal(http.get(req).body)
   print("response: ", res)

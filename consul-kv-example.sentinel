@@ -18,7 +18,7 @@ param address default "consul-cluster.consul.8f401e26-b086-451f-b61a-4ffb6dd2630
 # A valid Consul token with read on KV path
 param token
 
-path = "policy/mygroup1/myapp1/uat/"
+path = "policy/mygroup1/myapp1/uat"
 workspaceid = tfrun.workspace.id
 workspace_name = tfrun.workspace.name
 
